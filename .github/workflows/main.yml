@@ -1,0 +1,23 @@
+name: main
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Piping UI
+        run: |
+          set -xeu
+          git clone https://github.com/nwtgck/piping-ui-web.git
+          cd piping-ui-web
+          # NOTE: You can checkout any version you like
+          git checkout master
+          npm ci
+          npm run build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./piping-ui-web/dist
