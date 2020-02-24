@@ -1,6 +1,10 @@
 name: main
 
-on: [push]
+on:
+  push:
+  schedule:
+    # Every 20 min
+    - cron:  '*/20 * * * *'
 
 jobs:
   deploy:
